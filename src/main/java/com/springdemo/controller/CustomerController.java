@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springdemo.entity.Customer;
 import com.springdemo.service.CustomerService;
@@ -17,7 +18,7 @@ import com.springdemo.service.CustomerService;
 @RequestMapping("/customer")
 public class CustomerController {
 
-//	inject CustomerDAO implementation
+//	inject customerService implementation
 	@Autowired
 	private CustomerService customerService;
 
@@ -48,6 +49,32 @@ public class CustomerController {
 		customerService.saveCustomer(c);
 
 		return "redirect:list";
+	}
+
+	@GetMapping("/updateCustomer")
+	public String updateCustomer(@RequestParam int customerId, Model model) {
+
+		Customer c = customerService.getCustomer(customerId);
+
+		model.addAttribute("customer", c);
+
+		return "customer-form";
+	}
+
+	@GetMapping("deleteCustomer")
+	public String deleteCustomer(@RequestParam int customerId) {
+		customerService.deleteCustomer(customerId);
+		return "redirect:/customer/list";
+	}
+
+	@GetMapping("search")
+	public String SearchCustomer(@RequestParam("name") String name, Model model) {
+		List<Customer> customers = customerService.searchCustomers(name);
+
+		model.addAttribute("customers", customers);
+		model.addAttribute("name", name);
+
+		return "list-customers";
 	}
 
 }

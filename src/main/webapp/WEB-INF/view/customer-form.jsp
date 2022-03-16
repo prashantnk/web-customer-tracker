@@ -36,6 +36,8 @@
 			<table>
 			
 			<form:form action="saveCustomer" modelAttribute="customer" method="POST">
+				
+				<form:hidden path="id"/>
 						
 			<tr>
 				<td> <label>First Name : </label> </td>
@@ -59,7 +61,8 @@
 			
 			<div>
 			
-				<a href="${pageContext.request.contextPath}/customer/list"> Back to Customers List </a>
+<%-- 				<a href="${pageContext.request.contextPath}/customer/list"> Back to Customers List </a>
+ --%>				<a href="list"> Back to Customers List </a>
 			
 			</div>
 		
